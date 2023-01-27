@@ -36,7 +36,7 @@ def write_plt_file(name: str, colors: list[Color]):
         return line
 
     header = "ToonBoomAnimationInc PaletteFile 2\n"
-    palette_lines = [_format_line(palette) for palette in colors]
+    palette_lines = [_format_line(color) for color in colors]
 
     plt_path = Path(".") / f"{name}.plt"
     with open(plt_path, "w") as plt:
