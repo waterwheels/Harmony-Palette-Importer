@@ -1,5 +1,6 @@
 import secrets
 from pathlib import Path
+from sys import argv
 
 
 def hex_to_argb(hex_string: str) -> tuple[int, int, int, int]:
@@ -43,15 +44,31 @@ def write_plt_file(name: str, colors: list[Color]):
         plt.write(header)
         plt.writelines(palette_lines)
 
+def read_input_file(input_path: str):
+    """Read the contents of the input file and return list of colour strings"""
+    with open(input_path, "r") as in_plt:
+        txt_list = in_plt.read().splitlines()
+
+    if txt_list[0] == ";paint.net Palette File":
+        txt_list = [line for line in txt_list if line[0] != ";"] # strip comments
+    # could add other input parsers for different text formats?
+
+    return txt_list
 
 def main():
+    # test right number of argv?
+    # test input file exists here?
 
-    # colourListTxt should be a whitespace-separated string of colours of the format "########" where # is a hex character
-    colourListTxt = "ffaaabac ff0072ca 80010203"
-    colourList = colourListTxt.split()
+    colourList = read_input_file(argv[1])
 
     colors = [Color(hex) for hex in colourList]
-    write_plt_file("example", colors)
+
+    if argv[2]:
+        name = argv[2].split(".")[0] # allow user to write "blah.plt", but strip it off and add it back in write_plt_file
+    else:
+        name = "output"
+
+    write_plt_file(name, colors)
 
 
 if __name__ == "__main__":
