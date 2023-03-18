@@ -32,7 +32,7 @@ def write_plt_file(name: str, colors: list[Color]):
 
     def _format_line(color: Color) -> str:
         """Return a line formatted for entry into a Harmony palette file (.plt)"""
-        color_id = f"0x{secrets.token_hex(8)}"
+        color_id = f"0x{secrets.token_hex(8)}" # generate random new colour id
         line = f"Solid    {color.hex:<26} {color_id} {color.r:>3} {color.g:>3} {color.b:>3} {color.a:>3}\n"
         return line
 
